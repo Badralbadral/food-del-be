@@ -1,6 +1,5 @@
-// import { loginService } from "@/services/user";
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getUser } from "@/services/user";
+import { loginService } from "@/services/user";
 import connect from "@/helper/db";
 import { corsAllow } from "@/helper/cors";
 
@@ -15,27 +14,19 @@ export default async function handler(
 ) {
   await connect();
   await corsAllow(req, res);
-  if (req.method !== "GET") {
+  if (req.method !== "POST") {
     return res.status(405).json({ message: "Method Not Allowed" });
   }
-  console.log("🚀 ~ req.body:", req.body);
+  const data = req.body;
+  const { email, password } = data;
   try {
-    const users = await getUser();
-    res.status(200).json({ message: "Succesfully got users data", users });
-    console.log("Succesfully got users data");
+    const token = await loginService(email, password);
+    if (token) {
+      return res
+        .status(200)
+        .json({ token: token, message: "Login successful" });
+    }
   } catch (e: any) {
     return res.status(400).json({ message: e.message });
   }
-  //   if (req.method !== "POST") {
-  //     return res.status(405).json({ message: "Method Not Allowed" });
-  //   }
-  //   const { email, password } = req.body;
-  //   try {
-  //     const token = await loginService(email, password);
-  //     if (token) {
-  //       return res.status(200).json({ token, message: "Login successful" });
-  //     }
-  //   } catch (e: any) {
-  //     return res.status(400).json({ message: e.message });
-  //   }
 }
