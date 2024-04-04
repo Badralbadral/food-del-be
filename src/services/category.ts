@@ -25,7 +25,14 @@ export const deleteCategory = async (id: string) => {
 
 export const editCategory = async (id: string) => {
   try {
-    const categories = await CategoryModel.updateOne({ _id: id });
+    var filter = id;
+    const options = { upsert: true };
+    var updateDoc = { $set: { name: "Name changed" } };
+    const categories = await CategoryModel.updateOne({
+      filter,
+      updateDoc,
+      options,
+    });
     return categories;
   } catch (e: any) {
     throw new Error(e.message);

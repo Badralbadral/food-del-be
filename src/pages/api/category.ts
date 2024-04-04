@@ -27,21 +27,24 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       } catch (e: any) {
         return res.status(400).json({ message: e.message });
       }
-
     case "PUT":
       try {
-        const categories = await getCategory();
-        res.status(200).json(categories);
+        const categories = await editCategory(req.body);
+        console.log("🚀 ~ handler ~ categories:", categories);
+        res
+          .status(200)
+          .json({ message: "Category succesfully updated", categories });
       } catch (e: any) {
         return res.status(400).json({ message: e.message });
       }
     case "DELETE":
       try {
-        const categories = await deleteCategory(req.body);
-        res.status(200).json(categories);
+        const categories = await editCategory(req.body);
+        res.status(200).json({ message: "Category succesfully deleted" });
       } catch (e: any) {
         return res.status(400).json({ message: e.message });
       }
   }
 };
+
 export default handler;
