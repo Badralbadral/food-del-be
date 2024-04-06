@@ -4,8 +4,8 @@ const FoodSchema = new Schema({
   foodName: String,
   foodCategory: String,
   ingedients: String,
-  price: String,
-  sale: String,
+  price: Number,
+  sale: Number,
 });
 
-export const FoodMo = mongoose.models.Food || model("Food", FoodSchema);
+export const FoodModel = mongoose.models.Food || model("Food", FoodSchema);

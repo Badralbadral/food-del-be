@@ -16,3 +16,26 @@ export type UserType = {
     required: true;
   };
 };
+
+export type FoodType = {
+  foodName: {
+    type: String;
+    required: true;
+  };
+  foodCategory: {
+    type: String;
+    required: true;
+  };
+  ingedients: {
+    type: String;
+    required: true;
+  };
+  price: {
+    type: number;
+    required: true;
+  };
+  sale: {
+    type: number;
+    required: true;
+  };
+};
