@@ -4,7 +4,7 @@ import { FoodType } from "@/types/userType";
 export const createFood = async (
   foodName: string,
   foodCategory: string,
-  ingredients: string,
+  ingredients: String,
   price: number,
   sale: number,
   img: string
@@ -12,7 +12,7 @@ export const createFood = async (
   const createFood = await FoodModel.create({
     foodName,
     foodCategory,
-    ingredients,
+    ingredients: ingredients.split(","),
     price,
     sale,
     img,

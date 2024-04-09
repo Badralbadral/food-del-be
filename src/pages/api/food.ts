@@ -6,13 +6,14 @@ import { NextApiRequest, NextApiResponse } from "next";
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   await connect();
   await corsAllow(req, res);
+
   switch (req.method) {
     case "POST":
       try {
         const food = await createFood(
           req.body.foodName,
           req.body.foodCategory,
-          req.body.ingredients,
+          req.body.ingredients.replace(/ /g, ""),
           req.body.price,
           req.body.sale,
           req.body.img
