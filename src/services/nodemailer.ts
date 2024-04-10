@@ -26,3 +26,19 @@ export const changePassword = async (email: string, newPass: string) => {
   );
   return categories;
 };
+
+export const verificationService = async (password: string) => {
+  try {
+    const users = await UserModel.findOne({ password });
+    console.log("🚀 ~ loginService ~ users:", users);
+    if (password == users.password) {
+      const userInfo = {
+        password: password,
+      };
+    } else {
+      throw new Error("Invalid credentials");
+    }
+  } catch (e: any) {
+    throw new Error(e.message);
+  }
+};
