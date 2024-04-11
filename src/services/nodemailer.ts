@@ -20,25 +20,32 @@ export const mailOption = {
 };
 
 export const changePassword = async (email: string, newPass: string) => {
-  const categories = await UserModel.updateOne(
-    { email },
-    { password: newPass }
-  );
-  return categories;
+  const users = await UserModel.findOne({ email: email });
+  if (email == users.email) {
+    const categories = await UserModel.updateOne(
+      { email },
+      { password: newPass }
+    );
+    console.log("successfully updated");
+    return categories;
+  } else {
+    throw new Error("Invalid credentials");
+  }
 };
 
-export const verificationService = async (password: string) => {
-  try {
-    const users = await UserModel.findOne({ password });
-    console.log("🚀 ~ loginService ~ users:", users);
-    if (password == users.password) {
-      const userInfo = {
-        password: password,
-      };
-    } else {
-      throw new Error("Invalid credentials");
-    }
-  } catch (e: any) {
-    throw new Error(e.message);
+export const verificationService = async (
+  code: string,
+  newPassword: string
+) => {
+  const users = await UserModel.findOne({ password: code });
+  if (code == users.password) {
+    const changePassword = await UserModel.updateOne(
+      { password: code },
+      { password: newPassword }
+    );
+    console.log("successfully updated");
+    return changePassword;
+  } else {
+    throw new Error("Invalid credentials");
   }
 };
