@@ -26,7 +26,7 @@ export type FoodType = {
     type: String;
     required: true;
   };
-  ingedients: {
+  ingredients: {
     type: String;
     required: true;
   };
@@ -38,4 +38,6 @@ export type FoodType = {
     type: number;
     required: true;
   };
+  id: string;
+  img: string;
 };
